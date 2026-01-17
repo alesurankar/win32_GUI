@@ -6,42 +6,47 @@ App::App(AppMode mode)
     wnd(800, 600, L"My App"),
     mode(mode)
 {
-    if (mode == AppMode::GUI)
+    if (mode == AppMode::GUI) {
         wnd.SetMode(Window::Mode::GUI);
-    else
+    }
+    else {
         wnd.SetMode(Window::Mode::Game);
+        DrawFrame();
+    }
 }
 
 int App::Go()
 {
-    if (mode == AppMode::Game)
+    while (true)
     {
-        while (true)
-        {
-            if (const auto ecode = Window::ProcessMessages())
-                return *ecode;
+        std::optional<int> ecode;
 
-            DoFrame(); // update & render every iteration
+        if (mode == AppMode::Game) {
+            ecode = Window::ProcessMessages(); // non-blocking
+            UpdateFrame();
+            DrawFrame();
         }
-    }
-    else // GUI mode
-    {
-        MSG msg = {};
-        while (GetMessage(&msg, nullptr, 0, 0))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+        else if (mode == AppMode::GUI) {
+            ecode = Window::WaitMessages();    // blocking
+            if (ecode) {
+                return *ecode;
+            }
+            UpdateFrame();
+            DrawFrame();
         }
-        return static_cast<int>(msg.wParam);
     }
 }
 
+void App::UpdateFrame()
+{
 
-void App::DoFrame()
+}
+
+void App::DrawFrame()
 {
     const float c = sin(timer.Peek()) / 2.0f + 0.5f;
     auto& gfx = wnd.Gfx();
-    gfx.ClearBuffer(0.1f, 0.1f, 0.2f);
-    wnd.Gfx().DrawTestTriangle();
+    gfx.ClearBuffer(c, c, 1.0f);
+    gfx.DrawTestTriangle();
 	gfx.EndFrame();
 }

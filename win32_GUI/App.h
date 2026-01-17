@@ -11,10 +11,11 @@ enum class AppMode
 class App
 {
 public:
-	App(AppMode mode = AppMode::Game);
+	App(AppMode mode = AppMode::GUI);
 	int Go();
 private:
-	void DoFrame();
+	void UpdateFrame();
+	void DrawFrame();
 private:
 	Window wnd;
 	MyTimer timer;

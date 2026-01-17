@@ -62,6 +62,7 @@ public:
 	Window& operator=(const Window&) = delete;
 	void SetTitle(const std::wstring& title) const;
 	static std::optional<int> ProcessMessages() noexcept;
+	static std::optional<int> WaitMessages() noexcept;
 	Graphics& Gfx();
 	void SetMode(Mode mode) noexcept;
 private:

@@ -99,22 +99,34 @@ void Window::SetTitle(const std::wstring& title) const
 std::optional<int> Window::ProcessMessages() noexcept
 {
 	MSG msg;
-	// while queue has messages, remove and dispatch them (but do not block on empty queue)
 	while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 	{
-		// check for quit because peekmessage does not signal this via return val
 		if (msg.message == WM_QUIT)
 		{
-			// return optional wrapping int (arg to PostQuitMessage is in wparam) signals quit
 			return (int)msg.wParam;
 		}
-
-		// TranslateMessage will post auxilliary WM_CHAR messages from key msgs
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+	return {};
+}
 
-	// return empty optional when not quitting app
+std::optional<int> Window::WaitMessages() noexcept
+{
+	MSG msg = {};
+	const int ret = GetMessageW(&msg, nullptr, 0, 0);
+	if (ret == -1)
+	{
+		return {};
+	}
+	else if (ret == 0)
+	{
+		return (int)msg.wParam;
+	}
+
+	TranslateMessage(&msg);
+	DispatchMessage(&msg);
+
 	return {};
 }
 
@@ -172,19 +184,6 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 	case WM_KILLFOCUS:
 		kbd.ClearState();
 		break;
-	case WM_PAINT:
-	{
-		PAINTSTRUCT ps;
-		BeginPaint(hWnd, &ps);
-
-		if (mode == Mode::GUI)
-		{
-			Gfx().ClearBuffer(0.2f, 0.3f, 0.4f);
-			Gfx().EndFrame();
-		}
-
-		EndPaint(hWnd, &ps);
-	}
 	break;
 		/*********** KEYBOARD MESSAGES ***********/
 	case WM_KEYDOWN:

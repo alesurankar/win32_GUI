@@ -39,7 +39,9 @@ int App::Go()
 
 void App::DoFrame()
 {
+    const float c = sin(timer.Peek()) / 2.0f + 0.5f;
     auto& gfx = wnd.Gfx();
     gfx.ClearBuffer(0.1f, 0.1f, 0.2f);
+    wnd.Gfx().DrawTestTriangle();
 	gfx.EndFrame();
 }

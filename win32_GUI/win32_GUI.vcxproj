@@ -145,6 +145,7 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MyException.h" />
+    <ClInclude Include="MyTimer.h" />
     <ClInclude Include="MyWin.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="StringConv.h" />

@@ -16,9 +16,6 @@
     <Filter Include="Header Files\utils">
       <UniqueIdentifier>{cd7755b6-484e-47da-a607-2e9386931d87}</UniqueIdentifier>
     </Filter>
-    <Filter Include="NewFilter1">
-      <UniqueIdentifier>{ee1f8a73-ba58-4bbc-a759-e8ac130e1b93}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Dxerr">
       <UniqueIdentifier>{5a19dba6-1c17-4f67-9fdc-9c2d4d01da33}</UniqueIdentifier>
     </Filter>
@@ -47,6 +44,9 @@
     </ClCompile>
     <ClCompile Include="dxerr.cpp">
       <Filter>Dxerr</Filter>
+    </ClCompile>
+    <ClCompile Include="DxgiInfoManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="dxerr.h">
       <Filter>Dxerr</Filter>
+    </ClInclude>
+    <ClInclude Include="DxgiInfoManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

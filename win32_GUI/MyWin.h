@@ -20,7 +20,7 @@
 #define NOCTLMGR
 #define NODRAWTEXT
 #define NOKERNEL
-#define NONLS
+//#define NONLS  // for UTF-8 to UTF-16 conversion
 #define NOMEMMGR
 #define NOMETAFILE
 #define NOMINMAX

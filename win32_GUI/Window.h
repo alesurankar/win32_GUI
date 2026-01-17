@@ -11,6 +11,11 @@
 class Window
 {
 public:
+	enum class Mode
+	{
+		Game,
+		GUI
+	};
 	class Exception : public MyException
 	{
 		using MyException::MyException;
@@ -58,6 +63,7 @@ public:
 	void SetTitle(const std::wstring& title) const;
 	static std::optional<int> ProcessMessages() noexcept;
 	Graphics& Gfx();
+	void SetMode(Mode mode) noexcept;
 private:
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	static LRESULT CALLBACK HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
@@ -70,6 +76,7 @@ private:
 	int height;
 	HWND hWnd;
 	std::unique_ptr<Graphics> pGfx;
+	Mode mode = Mode::Game;
 };
 
 // error exception helper macro

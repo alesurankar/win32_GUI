@@ -74,7 +74,7 @@ void Graphics::EndFrame()
 #ifndef NDEBUG
 	infoManager.Set();
 #endif
-	if (FAILED(hr = pSwap->Present(1u, 0u)))
+	if (FAILED(hr = pSwap->Present(2u, 0u)))
 	{
 		if (hr == DXGI_ERROR_DEVICE_REMOVED)
 		{

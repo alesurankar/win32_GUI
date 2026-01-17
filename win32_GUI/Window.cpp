@@ -127,6 +127,11 @@ Graphics& Window::Gfx()
 	return *pGfx;
 }
 
+void Window::SetMode(Mode m) noexcept
+{
+	mode = m;
+}
+
 LRESULT CALLBACK Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
 	// use create parameter passed in from CreateWindow() to store window instance pointer at WinAPI side
@@ -167,6 +172,20 @@ LRESULT Window::HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noe
 	case WM_KILLFOCUS:
 		kbd.ClearState();
 		break;
+	case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		BeginPaint(hWnd, &ps);
+
+		if (mode == Mode::GUI)
+		{
+			Gfx().ClearBuffer(0.2f, 0.3f, 0.4f);
+			Gfx().EndFrame();
+		}
+
+		EndPaint(hWnd, &ps);
+	}
+	break;
 		/*********** KEYBOARD MESSAGES ***********/
 	case WM_KEYDOWN:
 		// syskey commands need to be handled to track ALT key (VK_MENU) and F10
